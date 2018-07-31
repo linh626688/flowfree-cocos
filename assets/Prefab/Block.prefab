@@ -44,8 +44,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 40
+      "width": 20,
+      "height": 20
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -72,7 +72,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "de3c72ea-2cf7-499b-a3ab-87633ab6fad7"
+      "__uuid__": "24c81817-db99-4fc9-86be-3ea854fc4bf1"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -96,7 +96,14 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true
+    "_enabled": true,
+    "live": 0,
+    "current": 0,
+    "startime": false,
+    "row": 0,
+    "col": 0,
+    "count": 0,
+    "m": 0
   },
   {
     "__type__": "cc.PrefabInfo",

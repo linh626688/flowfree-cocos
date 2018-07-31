@@ -1,44 +1,44 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        properties: {
-            blockRadius: 0,
+
+        live: 0,
+        current: 0,
+        startime: false,
+        Game: {
+            default: null,
+            serializable: false
         },
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
+        row: 0,
+        col: 0,
+        count: 0,
+        m: 0
+    },
+
+    onLoad() {
+        this.node.on('touchend', this.MoveCell, this);
+
+    },
+
+    MoveCell: function () {
+        var node = new cc.Node("New Sprite");
+        var sprite = node.addComponent(cc.Sprite);
+        node.parent = this.node;
+        var url = cc.url.raw("images/o.png");
+        var texture = cc.textureCache.addImage(url);
+        sprite.spriteFrame = new cc.SpriteFrame(texture);
+    },
+    start: function () {
+        // for (i = 0; i < this.Game.item.length; i++) {
+        //     if (this.row == this.Game.item[i].getComponent('Block').row && this.col == this.Game.item[i].getComponent('Block').col) {
+        //         this.m = i;
         //     }
-        // },
+        // }
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start () {
+    update(dt) {
 
     },
-
-    // update (dt) {},
 });
