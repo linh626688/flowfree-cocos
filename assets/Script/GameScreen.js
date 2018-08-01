@@ -74,38 +74,12 @@ cc.Class({
                 spawn.getComponent('Block').GamePlay = this;
             }
         }
-
+        console.log(JSON.stringify(this.item_2[2].getPosition()));
+        console.log(JSON.stringify(this.item_2[3].getPosition()));
+        console.log(JSON.stringify(this.item_2[17].getPosition()));
     },
     getNewBlockPosition: function (randX, randY) {
-
         return cc.p(randX, randY);
-
-    },
-    addTouchListernerTable() {
-        var json = {};
-        json["points"] = [];
-
-        this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            // for (let i = 0; i < this.item.length; i++) {
-            //     //  console.log(this.item[i].getPosition())
-            //     //  json["points"].push({ "x": this.item[i].getComponent('Block').row, "y": this.item[i].getComponent('Block').col, "player": 2 });
-            //     var node = new cc.Node("New Sprite");
-            //     var sprite = node.addComponent(cc.Sprite);
-            //     node.parent = this.item[i];
-            //     var url = cc.url.raw("images/x.png");
-            //     this.item[i].getComponent('Block').current = 2;
-            //     var texture = cc.textureCache.addImage(url);
-            //     sprite.spriteFrame = new cc.SpriteFrame(texture);
-            // }
-            var node = new cc.Node("New Sprite");
-            var sprite = node.addComponent(cc.Sprite);
-            node.parent = this.item[2];
-            var url = cc.url.raw("images/x.png");
-            this.item[2].getComponent('Block').current = 2;
-            var texture = cc.textureCache.addImage(url);
-            sprite.spriteFrame = new cc.SpriteFrame(texture);
-
-        }, this);
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -113,6 +87,8 @@ cc.Class({
     onLoad() {
         this.spawnNewTable_1();
         this.spawnNewTable_2();
+
+
         // this.addTouchListernerTable();
     },
 
