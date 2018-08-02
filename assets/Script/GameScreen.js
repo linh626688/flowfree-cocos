@@ -81,15 +81,52 @@ cc.Class({
     getNewBlockPosition: function (randX, randY) {
         return cc.p(randX, randY);
     },
+    onClickOnTable_1: function () {
+        for (let i = 0; i < this.item_1.length; i++) {
+            let newNode = this.item_1[i];
+            // let newNode2 = new cc.Node("Node Clone");
+            // for(let j = 0; i < this.item_2.length; j++ ) {
+
+            // }
+            this.item_1[i].on('touchend', function () {
+                var node = new cc.Node("New Sprite");
+                var sprite = node.addComponent(cc.Sprite);
+                node.parent = newNode;
+                var url = cc.url.raw("images/o.png");
+                var texture = cc.textureCache.addImage(url);
+                sprite.spriteFrame = new cc.SpriteFrame(texture);
+                console.log(JSON.stringify(node.parent.getPosition()));
+                // let node2 = new cc.Node("Node Clone");
+
+            }, this.item_1[i]);
+        }
+    },
+    onClickToOrtherTable(){
+
+    },
+    onClickOnTable_2: function () {
+        for (let i = 0; i < this.item_2.length; i++) {
+            let newNode = this.item_2[i];
+            this.item_2[i].on('touchend', function () {
+                var node = new cc.Node("New Sprite");
+                var sprite = node.addComponent(cc.Sprite);
+                node.parent = newNode;
+                var url = cc.url.raw("images/o.png");
+                var texture = cc.textureCache.addImage(url);
+                sprite.spriteFrame = new cc.SpriteFrame(texture);
+                console.log(JSON.stringify(node.parent.getPosition()));
+            }, this.item_2[i]);
+
+        }
+    },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         this.spawnNewTable_1();
         this.spawnNewTable_2();
-
-
-        // this.addTouchListernerTable();
+        this.onClickOnTable_1();
+        this.onClickOnTable_2();
     },
 
     start() {

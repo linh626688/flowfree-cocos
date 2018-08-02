@@ -18,7 +18,7 @@ cc.Class({
     },
 
     onLoad() {
-        this.node.on('touchend', this.MoveCell, this);
+        // this.node.on('touchend', this.MoveCell, this);
 
     },
 
@@ -32,11 +32,11 @@ cc.Class({
         console.log(JSON.stringify(node.parent.getPosition()));
     },
     start: function () {
-        for (i = 0; i < this.Game.item.length; i++) {
-            if (this.row == this.Game.item[i].getComponent('Block').row && this.col == this.Game.item[i].getComponent('Block').col) {
-                this.m = i;
-            }
-        }
+        // for (i = 0; i < this.Game.item.length; i++) {
+        //     if (this.row == this.Game.item[i].getComponent('Block').row && this.col == this.Game.item[i].getComponent('Block').col) {
+        //         this.m = i;
+        //     }
+        // }
     },
 
     update(dt) {
