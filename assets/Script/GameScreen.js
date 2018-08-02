@@ -35,7 +35,11 @@ cc.Class({
         },
         table_1: cc.Node,
         table_2: cc.Node,
+
+
     },
+    objectClick: "",
+
     spawnNewTable_1: function () {
 
         var x = 0;
@@ -81,13 +85,12 @@ cc.Class({
     getNewBlockPosition: function (randX, randY) {
         return cc.p(randX, randY);
     },
+    genarateItemTable_2: function( object ){
+        console.log("logggg" + JSON.stringify(object));
+    },
     onClickOnTable_1: function () {
         for (let i = 0; i < this.item_1.length; i++) {
             let newNode = this.item_1[i];
-            // let newNode2 = new cc.Node("Node Clone");
-            // for(let j = 0; i < this.item_2.length; j++ ) {
-
-            // }
             this.item_1[i].on('touchend', function () {
                 var node = new cc.Node("New Sprite");
                 var sprite = node.addComponent(cc.Sprite);
@@ -97,11 +100,27 @@ cc.Class({
                 sprite.spriteFrame = new cc.SpriteFrame(texture);
                 console.log(JSON.stringify(node.parent.getPosition()));
                 // let node2 = new cc.Node("Node Clone");
+                let nodeOldX = newNode.getPositionX();
+                let nodeOldY = newNode.getPositionY();
+                this.objectClick = { nodeOldX, nodeOldY };
+                console.log("logggg" + JSON.stringify(this.objectClick));
+                // for (let j = 0; i < this.item_2.length; j++) {
+                //     if (this.item_2[j].getPositionX == nodeOldX && this.item_2[j].getPositiony == nodeOldY) {
+                //         let newNode2 = this.item_2[j];
+                //         let node2 = new cc.Node("Node Clone");
+                //         let sprite2 = node2.addComponent(cc.Sprite);
+                //         node2.parent = newNode2;
+                //         sprite2.spriteFrame = new cc.SpriteFrame(texture);
+                //         console.log(JSON.stringify(node2.parent.getPosition()));
+                //     }
+                // }
 
             }, this.item_1[i]);
         }
     },
-    onClickToOrtherTable(){
+
+  
+    onClickToOrtherTable() {
 
     },
     onClickOnTable_2: function () {
