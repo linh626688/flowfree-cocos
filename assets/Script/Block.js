@@ -18,18 +18,36 @@ cc.Class({
     },
 
     onLoad() {
-        // this.node.on('touchend', this.MoveCell, this);
+        this.node.on('touchend', this.MoveCell, this);
 
     },
 
     MoveCell: function () {
-        var node = new cc.Node("New Sprite");
-        var sprite = node.addComponent(cc.Sprite);
-        node.parent = this.node;
-        var url = cc.url.raw("images/o.png");
-        var texture = cc.textureCache.addImage(url);
-        sprite.spriteFrame = new cc.SpriteFrame(texture);
-        console.log(JSON.stringify(node.parent.getPosition()));
+        var GameScreen = require("GameScreen");
+        for (i = 0; i < GameScreen.instance.item_1.length; i++) {
+            if (GameScreen.instance.item_1[i].getComponent('Block').row == this.row
+                && GameScreen.instance.item_1[i].getComponent('Block').col == this.col) {
+                let node = new cc.Node("New Sprite");
+                let sprite = node.addComponent(cc.Sprite);
+                node.parent = GameScreen.instance.item_1[i];
+                let url = cc.url.raw("resources/o.png");
+                let texture = cc.textureCache.addImage(url);
+                sprite.spriteFrame = new cc.SpriteFrame(texture);
+                console.log(JSON.stringify(node.parent.getPosition()));
+                GameScreen.instance.test(i);
+            }
+            if (GameScreen.instance.item_2[i].getComponent('Block').row == this.row
+                && GameScreen.instance.item_2[i].getComponent('Block').col == this.col) {
+                let node = new cc.Node("New Sprite");
+                let sprite = node.addComponent(cc.Sprite);
+                node.parent = GameScreen.instance.item_2[i];
+                let url = cc.url.raw("resources/o.png");
+                let texture = cc.textureCache.addImage(url);
+                sprite.spriteFrame = new cc.SpriteFrame(texture);
+                console.log(JSON.stringify(node.parent.getPosition()));
+            }
+        }
+
     },
     start: function () {
         // for (i = 0; i < this.Game.item.length; i++) {
