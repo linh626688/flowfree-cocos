@@ -18,7 +18,7 @@ cc.Class({
     },
 
     onLoad() {
-        this.node.on('touchend', this.MoveCell, this);
+        // this.node.on('touchend', this.MoveCell, this);
 
     },
 

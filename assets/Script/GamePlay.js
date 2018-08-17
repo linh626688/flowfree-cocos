@@ -1,18 +1,12 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
     properties: {
         blockPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+        blockTrue: {
             default: null,
             type: cc.Prefab
         },
@@ -34,45 +28,14 @@ cc.Class({
         },
         table_1: cc.Node,
         table_2: cc.Node,
-    },
-    spawnNewTable_1: function () {
-
-        var x = 0;
-        var y = 0;
-        for (var i = -7; i < 8; i++) {
-            for (var a = -7; a < 8; a++) {
-
-                var spawn = cc.instantiate(this.blockPrefab);
-                this.table_1.addChild(spawn);
-                spawn.getComponent('Block').row = a;
-                spawn.getComponent('Block').col = i;
-                x = a * spawn.width;
-                y = i * spawn.height;
-                spawn.setPosition(this.getNewBlockPosition(x, y));
-                this.item_1.push(spawn);
-                spawn.getComponent('Block').GamePlay = this;
-            }
-        }
-
-    },
-    spawnNewTable_2: function () {
-
-        var x = 0;
-        var y = 0;
-        for (var i = -7; i < 8; i++) {
-            for (var a = -7; a < 8; a++) {
-
-                var spawn = cc.instantiate(this.blockPrefab);
-                this.table_2.addChild(spawn);
-                spawn.getComponent('Block').row = a;
-                spawn.getComponent('Block').col = i;
-                x = a * spawn.width;
-                y = i * spawn.height;
-                spawn.setPosition(this.getNewBlockPosition(x, y));
-                this.item_2.push(spawn);
-                spawn.getComponent('Block').GamePlay = this;
-            }
-        }
+        truePosition: {
+            default: [],
+            serializable: false
+        },
+        lbCount:cc.Label,
+        
+        countActive :5,
+        countTrue : 3
     },
     getNewBlockPosition: function (randX, randY) {
         return cc.p(randX, randY);
@@ -82,39 +45,129 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
             let rectTable1 = this.table_1.getBoundingBoxToWorld();
             let rectTable2 = this.table_2.getBoundingBoxToWorld();
-
             if (cc.rectContainsPoint(rectTable1, event.getLocation())) {
-                let star = cc.instantiate(this.blockPrefab);
-                star.setPosition(cc.v2(event.getLocation().x - 480, event.getLocation().y - 320));
-                this.node.addChild(star);
+                console.log('event position: ' + JSON.stringify(event.getLocation()))
+                this.checkTrueClickTabel_1(event.getLocation());
+                // let star = cc.instantiate(this.blockPrefab);
+                // console.log('event position: ' + JSON.stringify(event.getLocation()));
+                // star.setPosition(cc.v2(event.getLocation().x - 179.91, event.getLocation().y - 320));
+                // this.node.addChild(star);
 
-                let star2 = cc.instantiate(this.blockPrefab);
-                star2.setPosition(cc.v2(event.getLocation().x - 480, event.getLocation().y - 640));
-                this.node.addChild(star2);
+                // let star2 = cc.instantiate(this.blockPrefab);
+                // star2.setPosition(cc.v2(event.getLocation().x - 179.91, event.getLocation().y - 640));
+                // this.node.addChild(star2);
             }
             if (cc.rectContainsPoint(rectTable2, event.getLocation())) {
+                console.log('event position: ' + JSON.stringify(event.getLocation()))
+                let locationEvent = event.getLocation();
+                locationEvent.y = locationEvent.y + 320 
+                console.log('locationEvent: ' + JSON.stringify(locationEvent));
+                this.checkTrueClickTable_2(locationEvent);
+
+                // let star = cc.instantiate(this.blockPrefab);
+                // star.setPosition(cc.v2(event.getLocation().x - 179.91, event.getLocation().y - 320));
+                // this.node.addChild(star);
+                // console.log('event position: ' + JSON.stringify(event.getLocation()));
+
+                // let star2 = cc.instantiate(this.blockPrefab);
+                // star2.setPosition(cc.v2(event.getLocation().x - 179.91, event.getLocation().y));
+                // this.node.addChild(star2);
+            }
+        }, this);
+    },
+    initTruePosition() {
+        let p1 = {
+            x: 181,
+            y: 44
+        };
+        let p2 = {
+            x: 127.5,
+            y: 567
+        };
+        let p3 = {
+            x: 231,
+            y: 551
+        }
+        // console.log("p1 " + this.calculateVertor(p1, p2))
+
+
+
+        this.truePosition.push(p1);
+        this.truePosition.push(p2);
+        this.truePosition.push(p3);
+
+        for (let i = 0; i < this.truePosition.length; i++) {
+            let star = cc.instantiate(this.blockPrefab);
+            star.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y - 320));
+            this.node.addChild(star);
+
+            let star2 = cc.instantiate(this.blockPrefab);
+            star2.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y - 640));
+            this.node.addChild(star2);
+        }
+    },
+    calculateVertor(p1, p2) {
+        return parseInt(Math.sqrt(Math.pow((p1.x -p2.x),2) +Math.pow((p1.y -p2.y),2) ));
+    },
+    checkTrueClickTabel_1(p){
+        for(let i = 0 ; i < this.truePosition.length;i ++){
+            if(this.calculateVertor(p, this.truePosition[i]) < 15 ){
+                let star = cc.instantiate(this.blockTrue);
+                star.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y - 320));
+                this.node.addChild(star);
+
+                let star2 = cc.instantiate(this.blockTrue);
+                star2.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y - 640));
+                this.node.addChild(star2);
+
+                this.truePosition.splice(i, 1);
+                break;
+            }else{
                 let star = cc.instantiate(this.blockPrefab);
-                star.setPosition(cc.v2(event.getLocation().x - 480, event.getLocation().y - 320));
+                star.setPosition(cc.v2(p.x - 179.91, p.y - 320));
                 this.node.addChild(star);
 
                 let star2 = cc.instantiate(this.blockPrefab);
-                star2.setPosition(cc.v2(event.getLocation().x - 480 , event.getLocation().y));
+                star2.setPosition(cc.v2(p.x - 179.91, p.y - 640));
                 this.node.addChild(star2);
+            
             }
-        }, this);
-
+        }
     },
-    onLoad() {
-        // this.spawnNewTable_1();
+    checkTrueClickTable_2(p){
+        for(let i = 0 ; i < this.truePosition.length;i ++){
+            if(this.calculateVertor(p, this.truePosition[i]) < 15 ){
+                let star = cc.instantiate(this.blockTrue);
+                star.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y - 320));
+                this.node.addChild(star);
 
-        // this.spawnNewTable_2();
+                let star2 = cc.instantiate(this.blockTrue);
+                star2.setPosition(cc.v2(this.truePosition[i].x - 179.91, this.truePosition[i].y- 640));
+                this.node.addChild(star2);
+
+                this.truePosition.splice(i, 1);
+                break;
+            }else{
+                let star = cc.instantiate(this.blockPrefab);
+                star.setPosition(cc.v2(p.x - 179.91, p.y - 640));
+                this.node.addChild(star);
+
+                let star2 = cc.instantiate(this.blockPrefab);
+                star2.setPosition(cc.v2(p.x - 179.91, p.y - 320));
+                this.node.addChild(star2);
+            
+            }
+        }
+    },
+    // {x: 231, y: 551}
+    onLoad() {
+        this.initTruePosition();
         this.onClickTable();
 
-
     },
 
 
-    start () {
+    start() {
 
     },
 
