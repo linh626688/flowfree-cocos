@@ -221,6 +221,9 @@ var GamePlay =  cc.Class({
             this.popupNext.active = true;
         }
     },
+    initGameFromLevel(levelChoose){
+        
+    }
     onLoad() {
         GamePlay.instance = this;
         this.initTruePosition(Global.lstTruePositon);

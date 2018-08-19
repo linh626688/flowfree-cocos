@@ -29,13 +29,44 @@ cc.Class({
         // },
     },
 
+    onClickItemLevel(event) {
+        // console.log('event click '+ event.getData());
+        var GamePlay = require("GamePlay");
+        let levelChoose = event.currentTarget.name;
+        levelChoose = levelChoose.substring(2, levelChoose.length);
+        switch (parseInt(levelChoose)) {
+            case 1:
+                console.log('11111');
+                GamePlay.initGameFromLevel(levelChoose);
+                break;
+            case 2:
+                console.log('2222');
+                GamePlay.initGameFromLevel(levelChoose);
+                break;
+            case 3:
+                console.log('3333');
+                break;
+            case 4:
+                console.log('4444');
+                break;
+            case 5:
+                console.log('55555');
+                break;
+            default:
+                console.log('default');
+                break;
+
+
+        }
+        // console.log('name ' + parseInt(levelChoose))
+    },
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         var GamePlay = require("GamePlay");
     },
 
-    start () {
+    start() {
 
     },
 
